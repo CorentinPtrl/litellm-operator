@@ -1,6 +1,7 @@
 ## Append samples of your project ##
 resources:
 - namespace.yaml
+- loadbalancer-service.yaml
 - auth_v1alpha1_virtualkey.yaml
 - auth_v1alpha1_user.yaml
 - auth_v1alpha1_team.yaml
