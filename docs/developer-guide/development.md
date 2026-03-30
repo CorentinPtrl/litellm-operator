@@ -44,6 +44,15 @@ kubectl get svc litellm-example-loadbalancer -n litellm -o jsonpath='{.status.lo
 # Go to the returned IP address in your browser to access the litellm example service
 ```
 
+> [!NOTE]
+> On macOS (Docker Desktop), LoadBalancer services may require elevated privileges and
+> the `jsonpath` command above can return empty. If you need a real LoadBalancer IP on
+> Docker Desktop, try running Docker with `sudo`. As an alternative, use port-forward:
+> ```sh
+> kubectl port-forward svc/litellm-example-loadbalancer 8080:80 -n litellm
+> # Then open http://localhost:8080 in your browser
+> ```
+
 #### Manual Development Setup
 If you prefer to set up manually or use an existing cluster:
 
