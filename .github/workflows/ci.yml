@@ -81,19 +81,33 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     env:
-      KIND_CLUSTER: e2e-test-cluster
+      CLUSTER_NAME: e2e-test-cluster
     steps:
     - uses: actions/checkout@v6
+
+    # vind requires the containerd snapshotter to be enabled
+    - name: Set up Docker
+      uses: docker/setup-docker-action@v5
+      with:
+        daemon-config: |
+          {
+            "debug": true,
+            "features": {
+              "containerd-snapshotter": true
+            }
+          }
 
     - uses: actions/setup-go@v6
       with:
         go-version: ${{ env.GO_VERSION }}
 
-    - name: Set up Kind cluster
-      uses: helm/kind-action@v1
+    - uses: loft-sh/setup-vind@v1
       with:
-        cluster_name: ${{ env.KIND_CLUSTER }}
-        kubectl_version: v1.32.0
+        version: v0.33.1
+        name: ${{ env.CLUSTER_NAME }}
+
+    - name: Add storageclass
+      run: kubectl apply -f scripts/local-dev/storageclass.yaml
 
     - name: Run e2e tests
       run: make test-e2e
