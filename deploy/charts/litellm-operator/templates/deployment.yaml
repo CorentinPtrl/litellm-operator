@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "litellm-operator.fullname" . }}-controller-manager
+  namespace: {{ include "litellm-operator.namespace" . }}
   labels:
     control-plane: controller-manager
   {{- include "litellm-operator.labels" . | nindent 4 }}
