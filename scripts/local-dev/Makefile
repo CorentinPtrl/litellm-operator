@@ -64,3 +64,7 @@ vind-get-loadbalancer-ip: ## Get the IP address of the load balancer service.
 .PHONY: debug-port-forward-litellm
 debug-port-forward-litellm: ## Port forward the litellm example service for a debug session of the operator.
 	$(KUBECTL) port-forward svc/litellm-example-service 4000:4000 -n litellm
+
+.PHONY: vind-get-admin-password
+vind-get-admin-password: ## Get the admin password for the litellm example service.
+	$(KUBECTL) get secret litellm-example-secrets -n litellm -o jsonpath='{.data.masterkey}' | base64 -d
