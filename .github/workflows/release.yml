@@ -215,7 +215,7 @@ jobs:
 
     - name: Commit and push changes
       id: commit-and-push
-      uses: EndBug/add-and-commit@v9
+      uses: EndBug/add-and-commit@v10
       with:
         message: "Automated update to ${{ needs.build-and-release.outputs.validated_version }} [skip ci]"
         default_author: github_actions
