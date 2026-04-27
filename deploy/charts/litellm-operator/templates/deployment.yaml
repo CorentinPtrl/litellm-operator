@@ -54,3 +54,7 @@ spec:
         8 }}
       serviceAccountName: {{ include "litellm-operator.fullname" . }}-controller-manager
       terminationGracePeriodSeconds: 10
+      {{- with .Values.controllerManager.topologySpreadConstraints }}
+      topologySpreadConstraints:
+          {{- toYaml . | nindent 8  }}
+      {{- end}}
