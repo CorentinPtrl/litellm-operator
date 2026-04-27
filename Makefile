@@ -121,7 +121,7 @@ test-e2e: ## Run the e2e tests against a Kind k8s instance that is already spun 
 	go test ./test/e2e/ -v -ginkgo.v
 
 .PHONY: clean-test-e2e
-clean-test-e2e: kind-cluster-delete kind-cluster test-e2e ## Recreate the Kind k8s instance and run the e2e tests.
+clean-test-e2e: vind-delete vind-create test-e2e ## Recreate the vCluster and run the e2e tests.
 
 .PHONY: lint
 lint: golangci-lint ## Run golangci-lint linter

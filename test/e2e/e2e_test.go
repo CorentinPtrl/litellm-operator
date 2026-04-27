@@ -69,17 +69,13 @@ var _ = BeforeSuite(func() {
 	_, err = utils.Run(cmd)
 	ExpectWithOffset(1, err).NotTo(HaveOccurred())
 
-	By("loading the the manager(Operator) image on Kind")
-	err = utils.LoadImageToKindClusterWithName(projectimage)
-	ExpectWithOffset(1, err).NotTo(HaveOccurred())
-
 	By("installing CRDs")
 	cmd = exec.Command("make", "install")
 	_, err = utils.Run(cmd)
 	ExpectWithOffset(1, err).NotTo(HaveOccurred())
 
 	By("deploying the controller-manager")
-	cmd = exec.Command("make", "deploy-controller-dev")
+	cmd = exec.Command("make", "deploy-controller-dev", fmt.Sprintf("IMG=%s", projectimage))
 	_, err = utils.Run(cmd)
 	ExpectWithOffset(1, err).NotTo(HaveOccurred())
 
@@ -87,6 +83,10 @@ var _ = BeforeSuite(func() {
 	cmd = exec.Command("kubectl", "wait", "--for=condition=Ready", "pod", "-l", "control-plane=controller-manager", "-n", namespace, "--timeout=300s")
 	_, err = utils.Run(cmd)
 	if err != nil {
+		// Describe the pod to get more information about the error
+		cmd = exec.Command("kubectl", "describe", "pod", "-l", "control-plane=controller-manager", "-n", namespace)
+		output, _ := utils.Run(cmd)
+		fmt.Println("controller-manager: ", string(output))
 		Expect(err).NotTo(HaveOccurred())
 	}
 
