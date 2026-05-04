@@ -120,7 +120,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install Helm
-      uses: azure/setup-helm@v3
+      uses: azure/setup-helm@v5
       with:
         version: v3.12.0
 
@@ -166,7 +166,7 @@ jobs:
         private-key: ${{ secrets.LITELLM_OPERATOR_BOT_PRIVATE_KEY }}
     
     - name: Install Helm
-      uses: azure/setup-helm@v4
+      uses: azure/setup-helm@v5
       with:
         version: v3.12.0
  
