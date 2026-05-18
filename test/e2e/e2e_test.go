@@ -42,6 +42,8 @@ const (
 	namespace        = "litellm-operator-system"
 	testTimeout      = 1 * time.Minute
 	testInterval     = 5 * time.Second
+	e2eTestInstance   = "e2e-test-instance"
+	e2eTestModelGPT4o = "gpt-4o"
 )
 
 // Common string constants used when comparing condition statuses in kubectl jsonpath output
@@ -163,7 +165,7 @@ var _ = Describe("controller", Ordered, func() {
 func waitForLiteLLMInstanceReady() error {
 	litellmInstance := &litellmv1alpha1.LiteLLMInstance{}
 	err := k8sClient.Get(context.Background(), types.NamespacedName{
-		Name:      "e2e-test-instance",
+		Name:      e2eTestInstance,
 		Namespace: e2eTestNamespace,
 	}, litellmInstance)
 	if err != nil {

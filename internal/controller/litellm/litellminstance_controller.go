@@ -52,6 +52,10 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/metrics"
 )
 
+// masterKeyDataKey is the key under which the LiteLLM master key is stored
+// in the generated Kubernetes Secret.
+const masterKeyDataKey = "masterkey"
+
 var (
 	// managed resource metrics
 	// Indicates whether a specific managed resource for a LiteLLMInstance is active (1) or inactive (0)
@@ -614,9 +618,9 @@ func buildSecretData(masterKey string, existingSecret *corev1.Secret) map[string
 	// If no master key is provided, try to preserve existing one
 	if masterKey == "" {
 		if existingSecret != nil && existingSecret.Data != nil {
-			if existingMasterKey, exists := existingSecret.Data["masterkey"]; exists {
+			if existingMasterKey, exists := existingSecret.Data[masterKeyDataKey]; exists {
 				// Preserve existing master key
-				data["masterkey"] = existingMasterKey
+				data[masterKeyDataKey] = existingMasterKey
 				return data
 			}
 		}
@@ -626,7 +630,7 @@ func buildSecretData(masterKey string, existingSecret *corev1.Secret) map[string
 
 	// Add master key (either provided or generated)
 	if masterKey != "" {
-		data["masterkey"] = []byte(masterKey)
+		data[masterKeyDataKey] = []byte(masterKey)
 	}
 
 	return data
@@ -1314,7 +1318,7 @@ func buildEnvironmentVariables(llm *litellmv1alpha1.LiteLLMInstance, secretName 
 					LocalObjectReference: corev1.LocalObjectReference{
 						Name: secretName,
 					},
-					Key: "masterkey",
+					Key: masterKeyDataKey,
 				},
 			},
 		},
