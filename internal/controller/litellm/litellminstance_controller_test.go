@@ -64,8 +64,8 @@ var _ = Describe("LiteLLMInstance Controller", func() {
 				Data: map[string][]byte{
 					testHostKey:     []byte("localhost"),
 					testPasswordKey: []byte("test-password"),
-					"username": []byte("test-user"),
-					"dbname":   []byte("test-db"),
+					"username":      []byte("test-user"),
+					"dbname":        []byte("test-db"),
 				},
 			}
 			existingSecret := &corev1.Secret{}
@@ -102,8 +102,8 @@ var _ = Describe("LiteLLMInstance Controller", func() {
 					Namespace: testNamespace,
 				},
 				Data: map[string][]byte{
-					testAPIKeyKey:  []byte("test-api-key"),
-					"ApiBase": []byte("test-api-base-url"),
+					testAPIKeyKey: []byte("test-api-key"),
+					"ApiBase":     []byte("test-api-base-url"),
 				},
 			}
 			existingSecret = &corev1.Secret{}

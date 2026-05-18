@@ -38,10 +38,10 @@ import (
 )
 
 const (
-	e2eTestNamespace = "e2e-test"
-	namespace        = "litellm-operator-system"
-	testTimeout      = 1 * time.Minute
-	testInterval     = 5 * time.Second
+	e2eTestNamespace  = "e2e-test"
+	namespace         = "litellm-operator-system"
+	testTimeout       = 1 * time.Minute
+	testInterval      = 5 * time.Second
 	e2eTestInstance   = "e2e-test-instance"
 	e2eTestModelGPT4o = "gpt-4o"
 )

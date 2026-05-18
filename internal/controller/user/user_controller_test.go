@@ -33,8 +33,8 @@ import (
 )
 
 const (
-	testNamespace      = "default"
-	testSecretName     = "test-secret"
+	testNamespace       = "default"
+	testSecretName      = "test-secret"
 	testUserUpToDateMsg = "User is up to date"
 )
 
