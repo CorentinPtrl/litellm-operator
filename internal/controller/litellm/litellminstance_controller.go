@@ -751,7 +751,7 @@ func (r *LiteLLMInstanceReconciler) updateConditions(ctx context.Context, llm *l
 
 	// Check if deployment is actually ready
 	deployment := &appsv1.Deployment{}
-	err := r.Client.Get(ctx, client.ObjectKey{Name: r.litellmResourceNaming.GetDeploymentName(), Namespace: llm.Namespace}, deployment)
+	err := r.Get(ctx, client.ObjectKey{Name: r.litellmResourceNaming.GetDeploymentName(), Namespace: llm.Namespace}, deployment)
 	if err != nil && !errors.Is(err, client.IgnoreNotFound(err)) {
 		deploymentReady.Status = metav1.ConditionFalse
 		deploymentReady.Reason = "DeploymentNotReady"
@@ -786,7 +786,7 @@ func (r *LiteLLMInstanceReconciler) updateConditions(ctx context.Context, llm *l
 		"Service is not ready",
 	)
 	service := &corev1.Service{}
-	err = r.Client.Get(ctx, client.ObjectKey{Name: r.litellmResourceNaming.GetServiceName(), Namespace: llm.Namespace}, service)
+	err = r.Get(ctx, client.ObjectKey{Name: r.litellmResourceNaming.GetServiceName(), Namespace: llm.Namespace}, service)
 	if err != nil && !errors.Is(err, client.IgnoreNotFound(err)) {
 		serviceReady.Status = metav1.ConditionFalse
 		serviceReady.Reason = "ServiceNotReady"
